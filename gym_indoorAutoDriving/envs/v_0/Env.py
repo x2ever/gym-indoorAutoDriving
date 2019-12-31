@@ -90,7 +90,7 @@ class indoorAutoDrivingEnv(gym.Env):
             done = True
             reward = -1
 
-        if self.without_reward > self.map_size * self.map_size:
+        if self.without_reward > 500:
             done = True
             reward = 0
 
