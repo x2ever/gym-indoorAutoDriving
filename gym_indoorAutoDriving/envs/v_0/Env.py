@@ -5,7 +5,7 @@ import cv2
 from gym import error, spaces, utils
 from gym.utils import seeding
 
-from env_utils import *
+from ..env_utilsenv_utils import *
 
 class indoorAutoDrivingEnv(gym.Env):
     metadata = {'render.modes': ['human']}
