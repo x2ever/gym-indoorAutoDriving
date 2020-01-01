@@ -4,3 +4,4 @@ train.py
 log/*
 models/*
 ppo2_tensorboard/*
+test.py
