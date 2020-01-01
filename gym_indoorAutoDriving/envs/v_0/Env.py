@@ -109,9 +109,27 @@ class indoorAutoDrivingEnv(gym.Env):
         return obs
 
     def render(self, mode='human', close=False):
-        img = None
+        img_size = 150
+        img_size = 150 - img_size % self.map_size
+        tile_size = img_size // self.map_size
+        padding_size = int(tile_size * 0.03)
+        img = np.zeros((img_size, img_size, 3), np.uint8)
 
+        cv2.rectangle(img, (0, 0), (img_size, img_size), (200, 200, 200), -1)
+
+        for i in range(self.map_size):
+            for j in range(self.map_size):
+                cv2.rectangle(img, (i * tile_size + padding_size, j * tile_size + padding_size), ((i + 1) * tile_size - padding_size, (j + 1) * tile_size - padding_size), (int(255 * self.map_state[i, j]), int(255 * self.map_state[i, j]), int(255 * self.map_state[i, j])), -1)
+
+        target_x, target_y = self.target_pos
+
+        cv2.rectangle(img, (target_x * tile_size + padding_size, target_y * tile_size + padding_size), ((target_x + 1) * tile_size - padding_size, (target_y + 1) * tile_size - padding_size), (150, 150, 50), -1)
+
+        robot_x, robot_y = self.robot_pos
+
+        cv2.rectangle(img, (robot_x * tile_size + padding_size, robot_y * tile_size + padding_size), ((robot_x + 1) * tile_size - padding_size, (robot_y + 1) * tile_size - padding_size), (50, 50, 150), -1)
         return img
+
 
     def _make_obs_space(self, init=True):
         map_state = np.copy(self.map_state)
